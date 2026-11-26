@@ -14,8 +14,13 @@ const Character = () => {
   return (
     <g transform={`translate(960 ${540 - bounce})`}>
       {/* Head */}
-      <circle cx="0" cy="-180" r="65" fill="#F2C49B" />
-      
+      <circle
+        cx="0"
+        cy="-180"
+        r="65"
+        fill="#F2C49B"
+      />
+
       {/* Hair */}
       <path
         d="M-62 -195 Q-50 -270 15 -245 Q65 -245 65 -190"
@@ -97,8 +102,13 @@ const MainAnimation = () => {
         overflow: "hidden",
       }}
     >
-      <svg width="100%" height="100%" viewBox="0 0 1920 1080">
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 1920 1080"
+      >
         <Character />
+
         <text
           x="960"
           y="850"
@@ -114,22 +124,15 @@ const MainAnimation = () => {
   );
 };
 
-export const RemotionRoot = () => (
-  <Composition
-    id="Main"
-    component={MainAnimation}
-    durationInFrames={150}
-    fps={30}
-    width={1920}
-    height={1080}
-  />
-);
-
-        durationInFrames={150}
-        fps={30}
-        width={1920}
-        height={1080}
-      />
-    </>
+export const RemotionRoot = () => {
+  return (
+    <Composition
+      id="Main"
+      component={MainAnimation}
+      durationInFrames={150}
+      fps={30}
+      width={1920}
+      height={1080}
+    />
   );
 };
