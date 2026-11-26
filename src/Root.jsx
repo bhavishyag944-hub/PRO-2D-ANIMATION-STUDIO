@@ -2,92 +2,53 @@
 import React from "react";
 import { Composition, useCurrentFrame } from "remotion";
 import { Character } from "./Character";
-
-const expressions = [
-  { name: "HAPPY", emoji: "😊", type: "happy", color: "#D4AF37" },
-  { name: "SAD", emoji: "😢", type: "sad", color: "#4776D0" },
-  { name: "ANGRY", emoji: "😠", type: "angry", color: "#D94B4B" },
-  { name: "SURPRISED", emoji: "😲", type: "surprised", color: "#39A982" },
-];
+import { Background } from "./Background";
 
 const MainAnimation = () => {
   const frame = useCurrentFrame();
+  const bounce = Math.sin(frame * 0.12) * 10;
 
   return (
     <div
       style={{
         width: "100%",
         height: "100%",
-        background: "linear-gradient(#101014, #25243A)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
+      {/* Animated Background */}
+      <Background />
+
+      {/* Character */}
       <div
         style={{
-          color: "#D4AF37",
-          fontSize: 62,
-          fontWeight: "bold",
-          marginBottom: 25,
+          position: "absolute",
+          width: 650,
+          height: 900,
+          bottom: -40,
+          left: "50%",
+          transform: `translateX(-50%) translateY(${bounce}px)`,
+          zIndex: 2,
         }}
       >
-        EMOTION SHOWCASE
+        <Character expression="happy" speaking={true} />
       </div>
 
+      {/* Studio Title */}
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: 18,
-          width: "96%",
+          position: "absolute",
+          top: 45,
+          width: "100%",
+          textAlign: "center",
+          color: "#FFD477",
+          fontSize: 55,
+          fontWeight: "bold",
+          zIndex: 3,
         }}
       >
-        {expressions.map((item, index) => {
-          const bounce = Math.sin(frame * 0.12 + index) * 8;
-
-          return (
-            <div
-              key={item.type}
-              style={{
-                width: 430,
-                height: 730,
-                background: "#ffffff08",
-                border: `3px solid ${item.color}`,
-                borderRadius: 25,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 12,
-                boxSizing: "border-box",
-              }}
-            >
-              <div
-                style={{
-                  width: "100%",
-                  height: 580,
-                  transform: `translateY(${bounce}px)`,
-                }}
-              >
-                <Character expression={item.type} />
-              </div>
-
-              <div
-                style={{
-                  color: item.color,
-                  fontSize: 34,
-                  fontWeight: "bold",
-                  marginTop: 8,
-                }}
-              >
-                {item.emoji} {item.name}
-              </div>
-            </div>
-          );
-        })}
+        2D ANIMATION STUDIO
       </div>
     </div>
   );
