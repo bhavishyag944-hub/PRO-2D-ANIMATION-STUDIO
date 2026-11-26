@@ -5,134 +5,62 @@ import {
   useCurrentFrame,
 } from "remotion";
 
-const Character = () => {
-  const frame = useCurrentFrame();
-
-  const swing = Math.sin(frame * 0.15) * 25;
-  const bounce = Math.abs(Math.sin(frame * 0.15)) * 12;
-
-  return (
-    <g transform={`translate(960 ${540 - bounce})`}>
-      {/* Head */}
-      <circle
-        cx="0"
-        cy="-180"
-        r="65"
-        fill="#F2C49B"
-      />
-
-      {/* Hair */}
-      <path
-        d="M-62 -195 Q-50 -270 15 -245 Q65 -245 65 -190"
-        fill="#20202A"
-      />
-
-      {/* Eyes */}
-      <circle cx="-22" cy="-185" r="6" fill="#20202A" />
-      <circle cx="22" cy="-185" r="6" fill="#20202A" />
-
-      {/* Body */}
-      <rect
-        x="-48"
-        y="-110"
-        width="96"
-        height="150"
-        rx="25"
-        fill="#D4AF37"
-      />
-
-      {/* Left Arm */}
-      <g transform={`rotate(${swing} -45 -90)`}>
-        <rect
-          x="-60"
-          y="-95"
-          width="22"
-          height="115"
-          rx="11"
-          fill="#F2C49B"
-        />
-      </g>
-
-      {/* Right Arm */}
-      <g transform={`rotate(${-swing} 45 -90)`}>
-        <rect
-          x="38"
-          y="-95"
-          width="22"
-          height="115"
-          rx="11"
-          fill="#F2C49B"
-        />
-      </g>
-
-      {/* Left Leg */}
-      <g transform={`rotate(${-swing} -22 40)`}>
-        <rect
-          x="-38"
-          y="35"
-          width="32"
-          height="115"
-          rx="12"
-          fill="#263B75"
-        />
-      </g>
-
-      {/* Right Leg */}
-      <g transform={`rotate(${swing} 22 40)`}>
-        <rect
-          x="6"
-          y="35"
-          width="32"
-          height="115"
-          rx="12"
-          fill="#263B75"
-        />
-      </g>
-    </g>
-  );
-};
+import { Character } from "./Character";
 
 const MainAnimation = () => {
+  const frame = useCurrentFrame();
+
+  const bounce =
+    Math.abs(Math.sin(frame * 0.15)) * 12;
+
   return (
     <div
       style={{
         width: "100%",
         height: "100%",
         background: "linear-gradient(#101014, #25243A)",
-        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      <svg
-        width="100%"
-        height="100%"
-        viewBox="0 0 1920 1080"
+      <div
+        style={{
+          width: 550,
+          height: 650,
+          transform: `translateY(${-bounce}px)`,
+        }}
       >
-        <Character />
+        <Character
+          skin="#F2C49B"
+          hair="#20202A"
+          outfit="#D4AF37"
+          pants="#263B75"
+          expression="happy"
+        />
+      </div>
 
-        <text
-          x="960"
-          y="850"
-          textAnchor="middle"
-          fill="#D4AF37"
-          fontSize="52"
-          fontWeight="bold"
-        >
-          CHARACTER ANIMATION ENGINE
-        </text>
-      </svg>
+      <div
+        style={{
+          color: "#D4AF37",
+          fontSize: 48,
+          fontWeight: "bold",
+        }}
+      >
+        CHARACTER DESIGN STUDIO
+      </div>
     </div>
   );
 };
 
-export const RemotionRoot = () => {
-  return (
-    <Composition
-      id="Main"
-      component={MainAnimation}
-      durationInFrames={150}
-      fps={30}
-      width={1920}
-      height={1080}
-    />
-  );
-};
+export const RemotionRoot = () => (
+  <Composition
+    id="Main"
+    component={MainAnimation}
+    durationInFrames={150}
+    fps={30}
+    width={1920}
+    height={1080}
+  />
+);
