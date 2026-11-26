@@ -1,5 +1,6 @@
 
 import React from "react";
+import { useCurrentFrame } from "remotion";
 
 export const Character = ({
   skin = "#F2C49B",
@@ -7,59 +8,26 @@ export const Character = ({
   outfit = "#D4AF37",
   pants = "#263B75",
   expression = "happy",
+  speaking = true,
 }) => {
-  const eyes = () => {
-    if (expression === "sad") {
-      return (
-        <>
-          <path d="M145 155 Q165 140 185 155" stroke="#20202A" strokeWidth="8" fill="none" />
-          <path d="M215 155 Q235 140 255 155" stroke="#20202A" strokeWidth="8" fill="none" />
-        </>
-      );
-    }
+  const frame = useCurrentFrame();
 
-    if (expression === "angry") {
-      return (
-        <>
-          <path d="M140 135 L185 155" stroke="#20202A" strokeWidth="10" />
-          <path d="M260 135 L215 155" stroke="#20202A" strokeWidth="10" />
-          <circle cx="165" cy="165" r="9" fill="#20202A" />
-          <circle cx="235" cy="165" r="9" fill="#20202A" />
-        </>
-      );
-    }
+  // Automatic eye blinking
+  const blink = frame % 90 < 5;
 
-    if (expression === "surprised") {
-      return (
-        <>
-          <circle cx="165" cy="155" r="17" fill="white" />
-          <circle cx="235" cy="155" r="17" fill="white" />
-          <circle cx="165" cy="155" r="8" fill="#20202A" />
-          <circle cx="235" cy="155" r="8" fill="#20202A" />
-        </>
-      );
-    }
+  // Animated mouth shapes
+  const mouthFrame = Math.floor(frame / 6) % 4;
 
-    return (
-      <>
-        <circle cx="165" cy="155" r="10" fill="#20202A" />
-        <circle cx="235" cy="155" r="10" fill="#20202A" />
-      </>
-    );
-  };
+  const mouthShapes = [
+    <path d="M165 205 Q200 235 235 205" />,
+    <ellipse cx="200" cy="215" rx="20" ry="10" />,
+    <ellipse cx="200" cy="215" rx="14" ry="22" />,
+    <path d="M170 215 Q200 200 230 215" />,
+  ];
 
-  const mouth = () => {
-    switch (expression) {
-      case "sad":
-        return <path d="M165 225 Q200 185 235 225" />;
-      case "angry":
-        return <path d="M170 215 L230 215" />;
-      case "surprised":
-        return <ellipse cx="200" cy="215" rx="17" ry="25" />;
-      default:
-        return <path d="M165 195 Q200 245 235 195" />;
-    }
-  };
+  const mouth = speaking
+    ? mouthShapes[mouthFrame]
+    : <path d="M165 205 Q200 235 235 205" />;
 
   return (
     <svg viewBox="0 0 400 600" width="100%" height="100%">
@@ -73,16 +41,34 @@ export const Character = ({
       <circle cx="200" cy="165" r="85" fill={skin} />
 
       {/* Eyes */}
-      {eyes()}
+      {blink ? (
+        <>
+          <path d="M145 155 Q165 155 185 155" stroke="#20202A" strokeWidth="8" fill="none" />
+          <path d="M215 155 Q235 155 255 155" stroke="#20202A" strokeWidth="8" fill="none" />
+        </>
+      ) : (
+        <>
+          <circle cx="165" cy="155" r="10" fill="#20202A" />
+          <circle cx="235" cy="155" r="10" fill="#20202A" />
+        </>
+      )}
+
+      {/* Eyebrows */}
+      <path d="M145 130 Q165 118 185 130" stroke="#20202A" strokeWidth="6" fill="none" />
+      <path d="M215 130 Q235 118 255 130" stroke="#20202A" strokeWidth="6" fill="none" />
 
       {/* Mouth */}
       <g
         stroke="#20202A"
-        strokeWidth="8"
+        strokeWidth="7"
         fill="none"
         strokeLinecap="round"
       >
-        {mouth()}
+        {expression === "sad"
+          ? <path d="M165 225 Q200 190 235 225" />
+          : expression === "angry"
+          ? <path d="M170 215 L230 215" />
+          : mouth}
       </g>
 
       {/* Body */}
