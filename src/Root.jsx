@@ -4,6 +4,7 @@ import { Composition, useCurrentFrame } from "remotion";
 import { Character } from "./Character";
 import { Background } from "./Background";
 import { Camera } from "./Camera";
+import { AudioEngine } from "./AudioEngine";
 
 const MainAnimation = () => {
   const frame = useCurrentFrame();
@@ -19,10 +20,8 @@ const MainAnimation = () => {
           overflow: "hidden",
         }}
       >
-        {/* Animated Background */}
         <Background />
 
-        {/* Character */}
         <div
           style={{
             position: "absolute",
@@ -37,7 +36,6 @@ const MainAnimation = () => {
           <Character expression="happy" speaking={true} />
         </div>
 
-        {/* Studio Title */}
         <div
           style={{
             position: "absolute",
@@ -52,6 +50,9 @@ const MainAnimation = () => {
         >
           2D ANIMATION STUDIO
         </div>
+
+        {/* Audio Engine - MP3 files can be added later */}
+        <AudioEngine />
       </div>
     </Camera>
   );
