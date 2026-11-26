@@ -8,12 +8,61 @@ export const Character = ({
   pants = "#263B75",
   expression = "happy",
 }) => {
+  const eyes = () => {
+    if (expression === "sad") {
+      return (
+        <>
+          <path d="M145 155 Q165 140 185 155" stroke="#20202A" strokeWidth="8" fill="none" />
+          <path d="M215 155 Q235 140 255 155" stroke="#20202A" strokeWidth="8" fill="none" />
+        </>
+      );
+    }
+
+    if (expression === "angry") {
+      return (
+        <>
+          <path d="M140 135 L185 155" stroke="#20202A" strokeWidth="10" />
+          <path d="M260 135 L215 155" stroke="#20202A" strokeWidth="10" />
+          <circle cx="165" cy="165" r="9" fill="#20202A" />
+          <circle cx="235" cy="165" r="9" fill="#20202A" />
+        </>
+      );
+    }
+
+    if (expression === "surprised") {
+      return (
+        <>
+          <circle cx="165" cy="155" r="17" fill="white" />
+          <circle cx="235" cy="155" r="17" fill="white" />
+          <circle cx="165" cy="155" r="8" fill="#20202A" />
+          <circle cx="235" cy="155" r="8" fill="#20202A" />
+        </>
+      );
+    }
+
+    return (
+      <>
+        <circle cx="165" cy="155" r="10" fill="#20202A" />
+        <circle cx="235" cy="155" r="10" fill="#20202A" />
+      </>
+    );
+  };
+
+  const mouth = () => {
+    switch (expression) {
+      case "sad":
+        return <path d="M165 225 Q200 185 235 225" />;
+      case "angry":
+        return <path d="M170 215 L230 215" />;
+      case "surprised":
+        return <ellipse cx="200" cy="215" rx="17" ry="25" />;
+      default:
+        return <path d="M165 195 Q200 245 235 195" />;
+    }
+  };
+
   return (
-    <svg
-      viewBox="0 0 400 600"
-      width="100%"
-      height="100%"
-    >
+    <svg viewBox="0 0 400 600" width="100%" height="100%">
       {/* Hair */}
       <path
         d="M110 145 Q100 35 200 45 Q300 35 290 145 L280 190 L120 190 Z"
@@ -24,80 +73,28 @@ export const Character = ({
       <circle cx="200" cy="165" r="85" fill={skin} />
 
       {/* Eyes */}
-      <circle cx="168" cy="155" r="9" fill="#20202A" />
-      <circle cx="232" cy="155" r="9" fill="#20202A" />
+      {eyes()}
 
-      {/* Expression */}
-      {expression === "happy" ? (
-        <path
-          d="M165 195 Q200 235 235 195"
-          stroke="#20202A"
-          strokeWidth="7"
-          fill="none"
-          strokeLinecap="round"
-        />
-      ) : expression === "sad" ? (
-        <path
-          d="M165 220 Q200 185 235 220"
-          stroke="#20202A"
-          strokeWidth="7"
-          fill="none"
-          strokeLinecap="round"
-        />
-      ) : (
-        <path
-          d="M175 210 L225 210"
-          stroke="#20202A"
-          strokeWidth="7"
-          strokeLinecap="round"
-        />
-      )}
+      {/* Mouth */}
+      <g
+        stroke="#20202A"
+        strokeWidth="8"
+        fill="none"
+        strokeLinecap="round"
+      >
+        {mouth()}
+      </g>
 
       {/* Body */}
-      <rect
-        x="115"
-        y="260"
-        width="170"
-        height="170"
-        rx="35"
-        fill={outfit}
-      />
+      <rect x="115" y="260" width="170" height="170" rx="35" fill={outfit} />
 
       {/* Arms */}
-      <rect
-        x="65"
-        y="275"
-        width="45"
-        height="150"
-        rx="20"
-        fill={skin}
-      />
-      <rect
-        x="290"
-        y="275"
-        width="45"
-        height="150"
-        rx="20"
-        fill={skin}
-      />
+      <rect x="65" y="275" width="45" height="150" rx="20" fill={skin} />
+      <rect x="290" y="275" width="45" height="150" rx="20" fill={skin} />
 
       {/* Legs */}
-      <rect
-        x="135"
-        y="420"
-        width="55"
-        height="130"
-        rx="18"
-        fill={pants}
-      />
-      <rect
-        x="210"
-        y="420"
-        width="55"
-        height="130"
-        rx="18"
-        fill={pants}
-      />
+      <rect x="135" y="420" width="55" height="130" rx="18" fill={pants} />
+      <rect x="210" y="420" width="55" height="130" rx="18" fill={pants} />
 
       {/* Shoes */}
       <ellipse cx="160" cy="555" rx="40" ry="18" fill="#20202A" />
