@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useCurrentFrame, interpolate } from "remotion";
+import { useCurrentFrame } from "remotion";
 
 export const Background = () => {
   const frame = useCurrentFrame();
@@ -14,7 +14,10 @@ export const Background = () => {
       viewBox="0 0 1920 1080"
       width="100%"
       height="100%"
-      style={{ position: "absolute", inset: 0 }}
+      style={{
+        position: "absolute",
+        inset: 0,
+      }}
     >
       <defs>
         <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
@@ -62,12 +65,24 @@ export const Background = () => {
       />
 
       {/* Ground */}
-      <rect x="0" y="850" width="1920" height="230" fill="#315A3C" />
+      <rect
+        x="0"
+        y="850"
+        width="1920"
+        height="230"
+        fill="#315A3C"
+      />
 
       {/* Trees */}
       {[150, 420, 1680, 1840].map((x, i) => (
         <g key={i} transform={`translate(${x} 0)`}>
-          <rect x="-12" y="740" width="24" height="150" fill="#543C2C" />
+          <rect
+            x="-12"
+            y="740"
+            width="24"
+            height="150"
+            fill="#543C2C"
+          />
           <circle cx="0" cy="710" r="65" fill="#1E593B" />
           <circle cx="-35" cy="745" r="42" fill="#286C42" />
           <circle cx="35" cy="745" r="42" fill="#286C42" />
