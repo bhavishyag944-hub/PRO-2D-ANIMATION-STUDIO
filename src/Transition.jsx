@@ -1,13 +1,28 @@
 
 import React from "react";
-import { useCurrentFrame, interpolate } from "remotion";
+import {
+  useCurrentFrame,
+  useVideoConfig,
+  interpolate,
+} from "remotion";
 
 export const Transition = ({ children, duration = 30 }) => {
   const frame = useCurrentFrame();
+  const { durationInFrames } = useVideoConfig();
+
+  const fadeDuration = Math.min(
+    duration,
+    Math.floor(durationInFrames / 2)
+  );
 
   const opacity = interpolate(
     frame,
-    [0, duration, 150 - duration, 150],
+    [
+      0,
+      fadeDuration,
+      durationInFrames - fadeDuration,
+      durationInFrames,
+    ],
     [0, 1, 1, 0],
     {
       extrapolateLeft: "clamp",
@@ -17,8 +32,8 @@ export const Transition = ({ children, duration = 30 }) => {
 
   const scale = interpolate(
     frame,
-    [0, duration, 150],
-    [1.08, 1, 1.04],
+    [0, durationInFrames],
+    [1.08, 1.04],
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
