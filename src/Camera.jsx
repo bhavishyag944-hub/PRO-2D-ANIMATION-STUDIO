@@ -1,15 +1,23 @@
 
 import React from "react";
-import { useCurrentFrame, interpolate } from "remotion";
+import {
+  useCurrentFrame,
+  useVideoConfig,
+  interpolate,
+} from "remotion";
 
 export const Camera = ({ children }) => {
   const frame = useCurrentFrame();
+  const { durationInFrames } = useVideoConfig();
 
   const zoom = interpolate(
     frame,
-    [0, 150],
+    [0, durationInFrames],
     [1, 1.12],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    }
   );
 
   const panX = Math.sin(frame * 0.025) * 25;
